@@ -1,0 +1,158 @@
+* { box-sizing: border_box; }
+body { margin: 0; font-family: sans-serif; background: #f5f5f5; height: 100vh; }
+
+.container {
+  display: grid;
+  grid-template-columns: 300px 1fr; /* 左300px, 右残り */
+  height: 100vh;
+}
+
+/* 左サイドバー (上下分割) */
+.sidebar {
+  display: grid;
+  grid-template-rows: 1fr 1fr; /* 上下均等 */
+  border-right: 1px solid #ddd;
+  background: white;
+}
+
+.section {
+  padding: 20px;
+  overflow-y: auto;
+  border-bottom: 1px solid #eee;
+}
+
+.section h3 { margin-top: 0; font-size: 1.1rem; color: #333; }
+.ai-note { font-size: 0.8rem; color: #666; margin-bottom: 10px; }
+
+/* ユーザーリスト */
+.user-list { list-style: none; padding: 0; }
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.user-item:hover { background: #f0f0f0; }
+.user-item img { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; background: #ddd; }
+
+/* 右メインエリア */
+.main-content {
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.profile-icon { width: 100px; height: 100px; border-radius: 50%; margin-right: 20px; background: #ddd; }
+.time-display { font-weight: bold; color: #2c3e50; }
+
+/* タイマー */
+.timer-section {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+  text-align: center;
+}
+#timer-display { font-size: 3rem; font-family: monospace; margin-bottom: 20px; }
+button { padding: 10px 20px; cursor: pointer; border: none; border-radius: 5px; font-size: 1rem; }
+#start-btn { background: #3498db; color: white; }
+#stop-btn { background: #e74c3c; color: white; }
+#book-form { margin-top: 20px; display: flex; gap: 10px; justify-content: center; }
+#book-form input { padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+
+/* 本のカードグリッド */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+}
+.book-card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  border-left: 4px solid #3498db;
+  cursor: pointer;
+  transition: transform 0.2s; 
+  position: relative;
+  width: 120px;
+  height: 90px;
+}
+.book-card:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+.book-card h4 { 
+  margin: 10px 0 5px 0; 
+  font-size: 1rem; 
+}
+.book-card p { 
+  margin: 0;
+  font-size: 0.8rem;
+  color: #666; 
+}
+.author {
+  /*position: absolute;
+  top: 60px;*/
+}
+.stats {
+  /*position: absolute;
+  top: 80px;*/
+}
+
+.app-header {
+  display: flex;
+  padding: 10px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+.header-left { display: flex; align-items: center; gap: 10px; }
+.nav-btn { font-size: 1.2rem; cursor: pointer; border: none; background: none;}
+.nav-logo { text-decoration: none; font-weight: bold; color: #333; }
+
+/* ハートボタン */
+.heart-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+
+/* モーダル */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1000;
+}
+.modal-content {
+  background: white; padding: 20px; border-radius: 8px;
+  width: 90%; max-width: 500px; position: relative;
+}
+.close-btn {
+  position: absolute; top: 10px; right: 10px;
+  background: none; border: none; font-size: 1.5rem; cursor: pointer;
+}
+.instagram-note {
+  position: absolute;
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #ffd700; 
+  border-radius: 15px;      
+  font-size: 14px;
+  color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  word-wrap: break-word;    
+  top: -20px;
+  right: -80px;
+  width: 100px;
+  z-index: 10; /* 他の要素より手前に表示 */
+}
+.instagram-note::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;             
+  left: 20px;               
+  border-width: 10px 10px 0 0;
+  border-style: solid;
+  border-color: #ffd700 transparent transparent transparent; 
+}

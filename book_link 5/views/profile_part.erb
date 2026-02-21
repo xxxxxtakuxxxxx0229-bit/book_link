@@ -1,0 +1,96 @@
+<div class="profile-header">
+  <img src="<%= @display_user.icon_url %>" class="profile-icon">
+  <div class="profile-info">
+    <div class="name-row">
+      <h2><%= @display_user.name %></h2>
+      
+      <% if @current_user && @display_user.id != @current_user.id %>
+        <button id="follow-btn" data-user-id="<%= @display_user.id %>" class="heart-btn">
+          <%= @current_user.following.include?(@display_user) ? '❤️' : '🤍' %>
+        </button>
+      <% end %>
+    </div>
+    <p class="bio"><%= @display_user.bio %></p>
+    <p class="stats">総読書時間: <span class="time-display"><%= @display_user.total_reading_time / 60 %>分</span></p>
+  </div>
+</div>
+
+<% if @display_user.id == @current_user.id %>
+  <div class="timer-section">
+    <div id="timer-display">00:00:00</div>
+    <div class="timer-controls">
+      <button id="start-btn">読書開始</button>
+      <button id="reset-timer-btn" style="display:none; background:#ccc;">中止</button>
+      <button id="stop-btn" style="display:none;">読書終了</button>
+    </div>
+    
+    <form id="book-form" style="display:none;">
+      <input type="text" name="title" placeholder="本の名前" required>
+      <input type="text" name="author" placeholder="著者" required>
+      <input type="number" name="page_count" placeholder="ページ数" required>
+      <input type="hidden" name="duration" id="hidden-duration">
+      <button type="submit">記録する</button>
+    </form>
+  </div>
+<% end %>
+
+<div class="books-grid">
+  <h3>読んだ本（クリックで詳細・編集）</h3>
+  <div class="grid-container" id="books-container">
+    <% @display_user.books.each do |book| %>
+      <div class="book-card" 
+           data-id="<%= book.id %>"
+           data-title="<%= book.title %>"
+           data-author="<%= book.author %>"
+           data-pages="<%= book.page_count %>"
+           data-time="<%= book.reading_time_seconds %>"
+           data-impression="<%= book.impression %>"
+           data-recommend="<%= book.recommended_person %>"
+           data-itibun="<% book.itibun %>">
+        <% if book.itibun && book.itibun != "" %>
+        <div class="instagram-note">
+          <%= book.itibun %>
+        </div>
+        <% else %>
+        <% end %>
+        <h4><%= book.title %></h4>
+        <p class="author"><%= book.author %></p>
+        <p class="stats"><%= book.page_count %>p / <%= book.reading_time_seconds / 60 %>分</p>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div id="book-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-content">
+    <button id="close-modal" class="close-btn">×</button>
+    
+    <div id="modal-view-mode">
+      <h2 id="modal-title"></h2>
+      <p>著者: <span id="modal-author"></span></p>
+      <p>合計ページ: <span id="modal-pages"></span>p</p>
+      <p>合計時間: <span id="modal-time"></span></p>
+      <div class="detail-box">
+        <p><strong>感想:</strong> <span id="modal-impression"></span></p>
+        <p><strong>おすすめの人:</strong> <span id="modal-recommend"></span></p>
+      </div>
+      <% if @display_user.id == @current_user.id %>
+        <button id="edit-btn">編集する</button>
+      <% end %>
+    </div>
+
+    <form id="modal-edit-form" style="display:none;">
+      <input type="hidden" name="book_id" id="edit-book-id">
+      <label>タイトル: <input type="text" name="title" id="edit-title"></label>
+      <label>著者: <input type="text" name="author" id="edit-author"></label>
+      <label>感想: <textarea name="impression" id="edit-impression"></textarea></label>
+      <label>おすすめの人: <input type="text" name="recommended_person" id="edit-recommend"></label>
+      <label>感想: <textarea name="itibun" id="edit-itibun"></textarea></label>
+
+      <div class="modal-actions">
+        <button type="submit" class="save-btn">保存</button>
+        <button type="button" id="delete-book-btn" class="delete-btn">この本を削除</button>
+      </div>
+    </form>
+  </div>
+</div>

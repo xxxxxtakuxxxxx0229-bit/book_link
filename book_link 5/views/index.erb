@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="sidebar">
+    
+    <div class="section favorites">
+      <h3>お気に入りの読書家</h3>
+      <ul class="user-list">
+        <% @favorites.each do |user| %>
+          <li class="user-item" data-id="<%= user.id %>">
+            <img src="<%= user.icon_url %>" alt="icon">
+            <span><%= user.name %></span>
+          </li>
+        <% end %>
+        <% if @favorites.empty? %>
+          <li class="empty-msg">まだお気に入りはいません</li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="section recommendations">
+      <h3>AIおすすめユーザー</h3>
+      <p class="ai-note">読書時間・ジャンルからマッチング</p>
+      <ul class="user-list">
+        <% @recommendations.each do |user| %>
+          <li class="user-item" data-id="<%= user.id %>">
+            <img src="<%= user.icon_url %>" alt="icon">
+            <span><%= user.name %></span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <main class="main-content" id="main-profile-area">
+    <%= erb :profile_part %>
+  </main>
+</div>

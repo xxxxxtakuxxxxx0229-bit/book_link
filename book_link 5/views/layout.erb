@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>BookLink</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-left">
+      <button onclick="history.back()" class="nav-btn">←</button>
+      <a href="/" class="nav-logo">📖 読書管理アプリ</a>
+    </div>
+  </header>
+  <%= yield %>
+  <script src="/js/app.js"></script>
+</body>
+</html>
